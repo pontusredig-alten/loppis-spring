@@ -1,6 +1,7 @@
 package se.iths.loppis.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import se.iths.loppis.entity.User;
 import se.iths.loppis.service.UserService;
@@ -11,12 +12,22 @@ import java.util.Optional;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    UserService userService;
+    Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    private UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping("/create")
     public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+           logger.trace("Vi loggar på TRACE-nivå");
+           logger.debug("Vi loggar på DEBUG-nivå");
+           logger.info("Vi loggar på INFO-nivå");
+           logger.warn("Vi loggar på WARN-nivå");
+           logger.error("Vi loggar på ERROR-nivå");
+           return userService.createUser(user);
     }
 
     @GetMapping("/findall")

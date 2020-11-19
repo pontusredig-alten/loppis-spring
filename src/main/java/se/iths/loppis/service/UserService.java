@@ -1,6 +1,5 @@
 package se.iths.loppis.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.iths.loppis.entity.User;
 import se.iths.loppis.repository.UserRepository;
@@ -10,8 +9,19 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
+
+    // Constructor injection
+    public UserService(UserRepository userRepository, TestScopes testScopes) {
+        this.userRepository = userRepository;
+    }
+
+    // Setter injection
+//    @Autowired
+//    void setUserRepository(UserRepository userRepository) {
+//        this.userRepository = userRepository;
+//    }
+
 
     public User createUser(User user) {
         return userRepository.save(user);

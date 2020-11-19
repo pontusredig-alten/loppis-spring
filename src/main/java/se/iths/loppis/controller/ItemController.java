@@ -1,6 +1,5 @@
 package se.iths.loppis.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import se.iths.loppis.entity.Item;
 import se.iths.loppis.service.ItemService;
@@ -11,8 +10,12 @@ import java.util.Optional;
 @RequestMapping("/item")
 public class ItemController {
 
-    @Autowired
-    ItemService itemService;
+
+    private ItemService itemService;
+
+    public ItemController(ItemService itemService) {
+        this.itemService = itemService;
+    }
 
     @PostMapping("/create")
     public Item createItem(@RequestBody Item item) {

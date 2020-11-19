@@ -1,6 +1,5 @@
 package se.iths.loppis.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.iths.loppis.entity.Item;
 import se.iths.loppis.repository.ItemRepository;
@@ -10,8 +9,13 @@ import java.util.Optional;
 @Service
 public class ItemService {
 
-    @Autowired
-    ItemRepository itemRepository;
+
+    private ItemRepository itemRepository;
+
+
+    public ItemService(ItemRepository itemRepository) {
+        this.itemRepository = itemRepository;
+    }
 
     public Item createItem(Item item) {
         return itemRepository.save(item);
