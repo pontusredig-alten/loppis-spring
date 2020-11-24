@@ -22,11 +22,11 @@ public class UserController {
 
     @PostMapping("/create")
     public User createUser(@RequestBody User user) {
-           logger.trace("Vi loggar på TRACE-nivå");
-           logger.debug("Vi loggar på DEBUG-nivå");
-           logger.info("Vi loggar på INFO-nivå");
-           logger.warn("Vi loggar på WARN-nivå");
-           logger.error("Vi loggar på ERROR-nivå");
+//           logger.trace("Vi loggar på TRACE-nivå");
+//           logger.debug("Vi loggar på DEBUG-nivå");
+           logger.info("createUser() is called with username: " + user.getUsername());
+//           logger.warn("Vi loggar på WARN-nivå");
+//           logger.error("Vi loggar på ERROR-nivå");
            return userService.createUser(user);
     }
 
