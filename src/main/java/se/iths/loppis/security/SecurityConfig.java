@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
+import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
@@ -24,7 +26,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(new BCryptPasswordEncoder());
+        provider.setAuthoritiesMapper(authoritiesMapper());
         return provider;
+    }
+
+    @Bean
+    public GrantedAuthoritiesMapper authoritiesMapper() {
+        SimpleAuthorityMapper authorityMapper = new SimpleAuthorityMapper();
+        authorityMapper.setConvertToUpperCase(true);
+        authorityMapper.setDefaultAuthority("USER");
+        return authorityMapper;
     }
 
     @Override
@@ -39,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/home", "/user/create").permitAll()
+                .antMatchers("/admin").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
