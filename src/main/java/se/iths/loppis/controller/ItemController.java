@@ -1,6 +1,5 @@
 package se.iths.loppis.controller;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import se.iths.loppis.entity.Item;
 import se.iths.loppis.service.ItemService;
