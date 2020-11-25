@@ -1,8 +1,11 @@
 package se.iths.loppis.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import se.iths.loppis.entity.AuthGroup;
 import se.iths.loppis.entity.User;
+import se.iths.loppis.repository.AuthGroupRepository;
 import se.iths.loppis.repository.UserRepository;
 
 import java.util.Optional;
@@ -11,6 +14,9 @@ import java.util.Optional;
 public class UserService {
 
     private UserRepository userRepository;
+
+    @Autowired
+    AuthGroupRepository authGroupRepository;
 
     // Constructor injection
     public UserService(UserRepository userRepository) {
@@ -26,11 +32,11 @@ public class UserService {
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-
-
     public User createUser(User user) {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        authGroupRepository.save(new AuthGroup(user.getUsername(), "USER"));
+//        authGroupRepository.save(new AuthGroup(user.getUsername(), "ADMIN"));
         return userRepository.save(user);
     }
 

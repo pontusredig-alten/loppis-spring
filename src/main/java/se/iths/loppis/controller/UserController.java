@@ -2,6 +2,7 @@ package se.iths.loppis.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import se.iths.loppis.entity.User;
 import se.iths.loppis.service.UserService;
@@ -30,10 +31,12 @@ public class UserController {
            return userService.createUser(user);
     }
 
+
     @GetMapping("/findall")
     public Iterable<User> findAllUsers() {
         return userService.findAllUsers();
     }
+
 
     @GetMapping("/id/{id}")
     public Optional<User> findUserById(@PathVariable Long id) {
