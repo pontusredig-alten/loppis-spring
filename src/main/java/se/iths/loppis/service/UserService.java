@@ -1,5 +1,6 @@
 package se.iths.loppis.service;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import se.iths.loppis.entity.User;
 import se.iths.loppis.repository.UserRepository;
@@ -10,6 +11,7 @@ import java.util.Optional;
 public class UserService {
 
     private UserRepository userRepository;
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     // Constructor injection
     public UserService(UserRepository userRepository, TestScopes testScopes) {
@@ -24,6 +26,8 @@ public class UserService {
 
 
     public User createUser(User user) {
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
