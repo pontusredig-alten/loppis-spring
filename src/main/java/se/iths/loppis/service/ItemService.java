@@ -2,6 +2,7 @@ package se.iths.loppis.service;
 
 import org.springframework.stereotype.Service;
 import se.iths.loppis.entity.Item;
+import se.iths.loppis.entity.User;
 import se.iths.loppis.repository.ItemRepository;
 
 import java.util.Optional;
@@ -11,14 +12,19 @@ public class ItemService {
 
 
     private ItemRepository itemRepository;
+    private UserService userService;
 
 
-    public ItemService(ItemRepository itemRepository) {
+    public ItemService(ItemRepository itemRepository, UserService userService) {
         this.itemRepository = itemRepository;
+        this.userService = userService;
     }
 
     public Item createItem(Item item) {
-        return itemRepository.save(item);
+        User user = userService.getLoggedInUser();
+        item.setUser(user);
+        itemRepository.save(item);
+        return item;
     }
 
     public void deleteItem(Long id) {
@@ -36,6 +42,12 @@ public class ItemService {
 
     public Iterable<Item> findItemsByUserId(Long id) {
         return itemRepository.findItemsByUserId(id);
+    }
+
+    public Iterable<Item> findAllByUser() {
+        Iterable<Item> allItemsByUser = itemRepository.findAll();
+        return allItemsByUser;
+
     }
 
 }

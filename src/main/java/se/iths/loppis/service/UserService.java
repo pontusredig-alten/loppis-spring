@@ -1,6 +1,8 @@
 package se.iths.loppis.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import se.iths.loppis.entity.AuthGroup;
@@ -44,6 +46,7 @@ public class UserService {
         userRepository.deleteById(foundUser.get().getId());
     }
 
+
     public Optional<User> findUserById(Long id) {
         return userRepository.findById(id);
     }
@@ -51,5 +54,20 @@ public class UserService {
     public Iterable<User> findAllUsers() {
         return userRepository.findAll();
     }
+
+    public User getUserByUsername(String username) {
+        Optional<User> foundUser = Optional.ofNullable(userRepository.findByUsername(username));
+
+        return foundUser.get();
+    }
+
+    public User getLoggedInUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String owner = authentication.getName();
+        Optional<User> userOptional = Optional.ofNullable(getUserByUsername(owner));
+
+        return userOptional.get();
+    }
+
 
 }

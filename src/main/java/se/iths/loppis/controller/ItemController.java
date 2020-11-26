@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import se.iths.loppis.entity.Item;
 import se.iths.loppis.service.ItemService;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -41,4 +42,11 @@ public class ItemController {
     public Iterable<Item> getAllItemsByUser(@PathVariable Long id) {
         return itemService.findItemsByUserId(id);
     }
+
+    @GetMapping("/getallbyuser")
+    Iterable<Item> getAllByUser() {
+        return itemService.findAllByUser();
+    }
+
+
 }

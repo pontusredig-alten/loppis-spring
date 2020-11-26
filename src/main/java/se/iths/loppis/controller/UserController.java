@@ -45,5 +45,9 @@ public class UserController {
         userService.deleteUser(id);
     }
 
+    @GetMapping("/getloggedin")
+    public User getLoggedIn() {
+        return userService.getLoggedInUser();
+    }
 
 }
