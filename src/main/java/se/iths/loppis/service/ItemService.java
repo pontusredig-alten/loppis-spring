@@ -11,13 +11,16 @@ public class ItemService {
 
 
     private ItemRepository itemRepository;
+    private UserService userService;
 
 
-    public ItemService(ItemRepository itemRepository) {
+    public ItemService(ItemRepository itemRepository, UserService userService) {
         this.itemRepository = itemRepository;
+        this.userService = userService;
     }
 
     public Item createItem(Item item) {
+        item.setUser(userService.getAuthenticatedUser());
         return itemRepository.save(item);
     }
 
@@ -36,6 +39,11 @@ public class ItemService {
 
     public Iterable<Item> findItemsByUserId(Long id) {
         return itemRepository.findItemsByUserId(id);
+    }
+
+    public Iterable<Item> findAllByUser() {
+        Iterable<Item> allItemsByUser = itemRepository.findAllByUser();
+        return allItemsByUser;
     }
 
 }

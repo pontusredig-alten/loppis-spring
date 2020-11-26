@@ -41,4 +41,10 @@ public class ItemController {
     public Iterable<Item> getAllItemsByUser(@PathVariable Long id) {
         return itemService.findItemsByUserId(id);
     }
+
+    @GetMapping("/findallitemsbyuser")
+    Iterable<Item> findAllItemsByUser() {
+        return itemService.findAllByUser();
+    }
+
 }

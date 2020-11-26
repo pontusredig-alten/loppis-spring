@@ -19,7 +19,7 @@ public class Item {
     private int quantity;
     private double price;
     private LocalDate createdAt;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "item_user")
     private User user;
 

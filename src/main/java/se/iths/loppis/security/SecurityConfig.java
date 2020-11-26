@@ -12,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import se.iths.loppis.security.jwt.config.JwtAuthenticationEntryPoint;
 import se.iths.loppis.security.jwt.config.JwtRequestFilter;
@@ -53,6 +54,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         authorityMapper.setDefaultAuthority("USER");
         return authorityMapper;
     }
+
+    @Bean
+    public SecurityEvaluationContextExtension securityEvaluationContextExtension() {
+        return new SecurityEvaluationContextExtension();
+    }
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
